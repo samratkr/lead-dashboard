@@ -2,6 +2,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
+  ArrowLeft,
+  ArrowRight,
   BriefcaseBusiness,
   ChevronLeft,
   ChevronRight,
@@ -161,105 +163,105 @@ export default function LeadTable({
           <thead className="sticky top-0 z-10 bg-white text-xs text-gray-900 font-diatype">
             <tr className="font-light cursor-pointer border-b border-gray-300">
               <th className="px-5 z-10 font-light min-w-[180px] sticky left-0 top-0 bg-white border-r border-gray-300">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <label className="relative flex items-center">
-                      <input
-                        type="checkbox"
-                        className="peer w-4 h-4 appearance-none border border-gray-300 rounded cursor-pointer checked:bg-black checked:border-black"
-                        checked={
-                          selectedIds.length === currentLeads.length &&
-                          currentLeads.length > 0
-                        }
-                        ref={(e) => {
-                          if (e) {
-                            e.indeterminate =
-                              selectedIds.length > 0 &&
-                              selectedIds.length < currentLeads.length;
-                          }
-                        }}
-                        onChange={toggleSelectAll}
-                      />
-                      <span className="absolute left-0 top-0 w-4 h-4 flex items-center justify-center text-white text-xs font-bold transition-transform peer-checked:scale-100">
-                        {selectedIds.length > 0 &&
-                        selectedIds.length < currentLeads.length
-                          ? "−"
-                          : "✓"}
-                      </span>
-                    </label>
+                <DropdownMenu.Root>
+                  <DropdownMenu.Trigger asChild>
+                    <div className="flex items-center justify-between w-full cursor-pointer select-none">
+                      <div className="flex items-center gap-2">
+                        <label className="relative flex items-center">
+                          <input
+                            type="checkbox"
+                            className="peer w-4 h-4 appearance-none border border-gray-300 rounded cursor-pointer checked:bg-black checked:border-black"
+                            checked={
+                              selectedIds.length === currentLeads.length &&
+                              currentLeads.length > 0
+                            }
+                            ref={(e) => {
+                              if (e) {
+                                e.indeterminate =
+                                  selectedIds.length > 0 &&
+                                  selectedIds.length < currentLeads.length;
+                              }
+                            }}
+                            onChange={toggleSelectAll}
+                          />
+                          <span className="absolute left-0 top-0 w-4 h-4 flex items-center justify-center text-white text-xs font-bold transition-transform peer-checked:scale-100">
+                            {selectedIds.length > 0 &&
+                            selectedIds.length < currentLeads.length
+                              ? "−"
+                              : "✓"}
+                          </span>
+                        </label>
 
-                    {/* Dropdown trigger is the NAME text itself */}
-                    <DropdownMenu.Root>
-                      <DropdownMenu.Trigger asChild>
-                        <span className="cursor-pointer select-none">NAME</span>
-                      </DropdownMenu.Trigger>
-                      <DropdownMenu.Content
-                        align="start"
-                        className="min-w-[160px] bg-white border shadow-md rounded p-1"
-                      >
-                        <DropdownMenu.Item
-                          className="px-2 py-1 cursor-pointer hover:bg-gray-100 text-sm rounded"
-                          onClick={() => moveColumn(0, "left")}
-                        >
-                          Move Left
-                        </DropdownMenu.Item>
-                        <DropdownMenu.Item
-                          className="px-2 py-1 cursor-pointer hover:bg-gray-100 text-sm rounded"
-                          onClick={() => moveColumn(0, "right")}
-                        >
-                          Move Right
-                        </DropdownMenu.Item>
-                        <DropdownMenu.Item
-                          className="px-2 py-1 cursor-pointer hover:bg-gray-100 text-sm rounded"
-                          onClick={() => toggleFreezeColumn(0)}
-                        >
-                          {columns[0]?.sticky
-                            ? "Unfreeze Column"
-                            : "Freeze Column"}
-                        </DropdownMenu.Item>
-                        <DropdownMenu.Item
-                          className="px-2 py-1 cursor-pointer hover:bg-gray-100 text-sm rounded"
-                          onClick={() => editColumn(0)}
-                        >
-                          Edit Column
-                        </DropdownMenu.Item>
-                      </DropdownMenu.Content>
-                    </DropdownMenu.Root>
-                  </div>
-                </div>
+                        <span>NAME</span>
+                      </div>
+                    </div>
+                  </DropdownMenu.Trigger>
+
+                  <DropdownMenu.Content
+                    align="start"
+                    className="min-w-[160px] bg-white border border-gray-300 shadow-md rounded p-2 mt-2"
+                  >
+                    <DropdownMenu.Item
+                      className="px-2 py-1 flex items-center gap-2 cursor-pointer hover:bg-gray-100 text-sm rounded"
+                      onClick={() => moveColumn(0, "left")}
+                    >
+                      <ArrowLeft size={16} />
+                      Move Left
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item
+                      className="px-2 py-1 flex items-center gap-2 cursor-pointer hover:bg-gray-100 text-sm rounded"
+                      onClick={() => moveColumn(0, "right")}
+                    >
+                      <ArrowRight size={16} />
+                      Move Right
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item
+                      className="px-2 py-1 cursor-pointer hover:bg-gray-100 text-sm rounded"
+                      onClick={() => toggleFreezeColumn(0)}
+                    >
+                      {columns[0]?.sticky ? "Unfreeze Column" : "Freeze Column"}
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item
+                      className="px-2 py-1 cursor-pointer hover:bg-gray-100 text-sm rounded"
+                      onClick={() => editColumn(0)}
+                    >
+                      Edit Column
+                    </DropdownMenu.Item>
+                  </DropdownMenu.Content>
+                </DropdownMenu.Root>
               </th>
 
-              {/* Other columns */}
               {columns.slice(1).map((col, idx) => (
                 <th
                   key={col.key}
                   className={`px-5 py-2 z-10 min-w-[${
                     col.width
                   }px] border-b border-gray-300 
-          ${col.sticky ? "sticky left-0 bg-white border-r" : "bg-white"} 
-          font-light`}
+      ${col.sticky ? "sticky left-0 bg-white border-r" : "bg-white"} 
+      font-light`}
                 >
                   <DropdownMenu.Root>
                     <DropdownMenu.Trigger asChild>
-                      <span className="cursor-pointer select-none">
-                        {col.label}
-                      </span>
+                      <div className="w-full cursor-pointer select-none flex items-center justify-between">
+                        <span>{col.label}</span>
+                      </div>
                     </DropdownMenu.Trigger>
+
                     <DropdownMenu.Content
                       align="start"
-                      className="min-w-[160px] bg-white border shadow-md rounded p-1"
+                      className="min-w-[160px] bg-white border border-gray-300 shadow-md rounded p-2"
                     >
                       <DropdownMenu.Item
-                        className="px-2 py-1 cursor-pointer hover:bg-gray-100 text-sm rounded"
+                        className="px-2 py-1 flex items-center gap-2 cursor-pointer hover:bg-gray-100 text-sm rounded"
                         onClick={() => moveColumn(idx + 1, "left")}
                       >
-                        Move Left
+                        <ArrowLeft size={16} /> Move Left
                       </DropdownMenu.Item>
                       <DropdownMenu.Item
-                        className="px-2 py-1 cursor-pointer hover:bg-gray-100 text-sm rounded"
+                        className="px-2 py-1 flex items-center gap-2 cursor-pointer hover:bg-gray-100 text-sm rounded"
                         onClick={() => moveColumn(idx + 1, "right")}
                       >
-                        Move Right
+                        <ArrowRight size={16} /> Move Right
                       </DropdownMenu.Item>
                       <DropdownMenu.Item
                         className="px-2 py-1 cursor-pointer hover:bg-gray-100 text-sm rounded"
