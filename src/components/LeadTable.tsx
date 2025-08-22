@@ -161,7 +161,7 @@ export default function LeadTable({
     <div
       className={`${
         isDark ? "bg-primary-dark text-white" : "bg-primary text-gray-800"
-      }flex flex-col h-full border border-gray-100 shadow relative`}
+      } flex flex-col h-full border border-gray-100 shadow relative`}
     >
       <div className="flex-1 overflow-y-auto overflow-x-auto">
         <table
@@ -170,10 +170,17 @@ export default function LeadTable({
           } w-full text-sm text-left table-auto`}
         >
           <thead className="sticky top-0 z-10 text-xs font-diatype">
-            <tr className="font-light cursor-pointer border-b border-gray-300">
-              <th className="px-5 z-10 font-light min-w-[180px] sticky left-0 top-0 border-r border-gray-300">
+            <tr
+              className={`${
+                isDark ? "bg-primary-dark" : "bg-white"
+              } font-light cursor-pointer border-b border-gray-300`}
+            >
+              <th
+                className={`${
+                  isDark ? "bg-primary-dark" : "bg-white"
+                } px-5 z-10 font-light min-w-[180px] sticky left-0 top-0 border-r border-gray-300`}
+              >
                 <DropdownMenu.Root>
-                  {/* <DropdownMenu.Trigger asChild> */}
                   <div className="flex items-center justify-between w-full cursor-pointer select-none">
                     <div className="flex items-center gap-2">
                       <label className="relative flex items-center">
@@ -204,43 +211,6 @@ export default function LeadTable({
                       <span>NAME</span>
                     </div>
                   </div>
-                  {/* </DropdownMenu.Trigger> */}
-
-                  {/* <DropdownMenu.Content
-                    align="start"
-                    className={`${
-                      isDark
-                        ? "bg-primary-dark text-white"
-                        : "bg-primary text-gray-800"
-                    } min-w-[160px] border border-gray-300 shadow-md rounded p-2 mt-2`}
-                  >
-                    <DropdownMenu.Item
-                      className="px-2 py-1 flex items-center gap-2 cursor-pointer hover:bg-gray-100 text-sm rounded"
-                      onClick={() => moveColumn(0, "left")}
-                    >
-                      <ArrowLeft size={16} />
-                      Move Left
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item
-                      className="px-2 py-1 flex items-center gap-2 cursor-pointer hover:bg-gray-100 text-sm rounded"
-                      onClick={() => moveColumn(0, "right")}
-                    >
-                      <ArrowRight size={16} />
-                      Move Right
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item
-                      className="px-2 py-1 cursor-pointer hover:bg-gray-100 text-sm rounded"
-                      onClick={() => toggleFreezeColumn(0)}
-                    >
-                      {columns[0]?.sticky ? "Unfreeze Column" : "Freeze Column"}
-                    </DropdownMenu.Item>
-                    <DropdownMenu.Item
-                      className="px-2 py-1 cursor-pointer hover:bg-gray-100 text-sm rounded"
-                      onClick={() => editColumn(0)}
-                    >
-                      Edit Column
-                    </DropdownMenu.Item>
-                  </DropdownMenu.Content> */}
                 </DropdownMenu.Root>
               </th>
 
@@ -250,7 +220,11 @@ export default function LeadTable({
                   className={`px-5 py-2 z-10 min-w-[${
                     col.width
                   }px] border-b border-gray-300 
-      ${col.sticky ? "sticky left-0 border-r" : ""} 
+      ${
+        col.sticky
+          ? `sticky ${isDark ? "bg-primary-dark" : "bg-white"} left-0 border-r`
+          : ""
+      } 
       font-light`}
                 >
                   <DropdownMenu.Root>
@@ -310,7 +284,13 @@ export default function LeadTable({
                     }px] truncate group-hover:${
                       isDark ? "bg-gray-500" : "bg-gray-300"
                     } 
-            ${col.sticky ? "sticky left-0 border-r border-gray-300" : ""}`}
+            ${
+              col.sticky
+                ? `sticky ${
+                    isDark ? "bg-primary-dark" : "bg-white"
+                  } left-0 border-r border-gray-300`
+                : ""
+            }`}
                   >
                     {col.key === "name" ? (
                       <div className="flex gap-2 items-center">
@@ -350,7 +330,7 @@ export default function LeadTable({
       <div
         className={`${
           isDark ? "bg-primary-dark text-white" : "bg-primary text-gray-800"
-        } shrink-0 border-t border-gray-100 p-3 flex items-center gap-3 text-sm`}
+        } shrink-0 border-t border-gray-100 p-2 flex items-center gap-3 text-sm sticky bottom-0`}
       >
         <button
           onClick={handlePrev}
