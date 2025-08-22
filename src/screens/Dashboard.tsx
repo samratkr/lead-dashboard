@@ -112,7 +112,7 @@ export default function Dashboard() {
               btn.style === "gradient"
                 ? "bg-gradient-to-r from-[#7b8eca] to-[#ec6dadff] text-white"
                 : btn.style === "bg-yellow-200"
-                ? "bg-[#ebf212] border border-gray-300"
+                ? "bg-yellow-300 border border-gray-300"
                 : "border border-gray-300 hover:bg-gray-300"
             }`}
           >
