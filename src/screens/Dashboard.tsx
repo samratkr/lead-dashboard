@@ -94,18 +94,26 @@ export default function Dashboard() {
     const visibleButtons = allButtons.slice(0, maxVisible);
     const overflowButtons = allButtons.slice(maxVisible);
 
+    const isDark = useSelector((state: RootState) => state?.leads?.darkMode);
+
     return (
-      <div className="fixed top-10 left-[22%] z-50 w-[77.2%] max-w-6xl bg-white rounded-xl p-2 flex items-center gap-2 border border-gray-200 overflow-hidden">
+      <div
+        className={`${
+          isDark ? "bg-primary-dark text-white" : "bg-primary text-gray-800"
+        } fixed top-10 left-[22%] z-50 w-[77.2%] max-w-6xl rounded-xl p-2 flex items-center gap-2 border border-gray-200 overflow-hidden`}
+      >
         {visibleButtons.map((btn, idx) => (
           <button
             key={idx}
             onClick={btn.onClick}
-            className={`px-3 py-1 flex items-center gap-1 cursor-pointer rounded-md text-gray-700 text-sm font-medium ${
+            className={`${
+              isDark ? "bg-primary-dark text-white" : "bg-primary text-gray-800"
+            } px-3 py-1 flex items-center gap-1 cursor-pointer rounded-md text-gray-700 text-sm font-medium ${
               btn.style === "gradient"
                 ? "bg-gradient-to-r from-[#7b8eca] to-[#ec6dadff] text-white"
                 : btn.style === "bg-yellow-200"
                 ? "bg-[#ebf212] border border-gray-300"
-                : "border border-gray-300 hover:bg-gray-200"
+                : "border border-gray-300 hover:bg-gray-300"
             }`}
           >
             {btn.icon} {btn.label}
@@ -115,17 +123,33 @@ export default function Dashboard() {
         {overflowButtons.length > 0 && (
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
-              <button className="px-3 py-1 rounded-md cursor-pointer border border-gray-300 hover:bg-gray-200 flex items-center text-gray-700 text-sm font-medium">
+              <button
+                className={`${
+                  isDark
+                    ? "bg-primary-dark text-white"
+                    : "bg-primary text-gray-800"
+                } px-3 py-1 rounded-md cursor-pointer border border-gray-300 hover:bg-gray-300 flex items-center text-gray-700 text-sm font-medium`}
+              >
                 <Ellipsis size={20} />
               </button>
             </DropdownMenu.Trigger>
 
-            <DropdownMenu.Content className="bg-white border cursor-pointer border-gray-300 rounded-md shadow-lg p-2 flex flex-col gap-1 mr-3 mt-2">
+            <DropdownMenu.Content
+              className={`${
+                isDark
+                  ? "bg-primary-dark text-white"
+                  : "bg-primary text-gray-800"
+              }  border cursor-pointer border-gray-300 rounded-md shadow-lg p-2 flex flex-col gap-1 mr-3 mt-2`}
+            >
               {overflowButtons.map((btn, idx) => (
                 <DropdownMenu.Item
                   key={idx}
                   onClick={btn.onClick}
-                  className={`px-3 py-1 flex items-center gap-1 rounded-md text-gray-700 text-sm font-medium hover:bg-gray-100 ${
+                  className={` ${
+                    isDark
+                      ? "bg-primary-dark text-white"
+                      : "bg-primary text-gray-800"
+                  } px-3 py-1 flex items-center gap-1 rounded-md text-gray-700 text-sm font-medium hover:bg-gray-100 ${
                     btn.style === "gradient"
                       ? "bg-gradient-to-r from-[#7b8eca] to-[#ec6dadff] text-white"
                       : btn.style === "bg-yellow-200"
@@ -142,9 +166,14 @@ export default function Dashboard() {
       </div>
     );
   };
+  const isDark = useSelector((state: RootState) => state?.leads?.darkMode);
   return (
     <Layout>
-      <div className="flex flex-col h-screen relative">
+      <div
+        className={`${
+          isDark ? "bg-primary-dark text-white" : "bg-primary text-gray-800"
+        } flex flex-col h-screen relative`}
+      >
         {selectedIds.length > 0 && (
           <SelectedActions
             selectedIds={selectedIds}

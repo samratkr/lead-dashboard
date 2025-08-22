@@ -7,6 +7,8 @@ import {
 } from "lucide-react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 export default function SortDropdown({
   onApply,
@@ -15,11 +17,12 @@ export default function SortDropdown({
 }) {
   const [field, setField] = useState("Relevance");
   const [order, setOrder] = useState("asc");
+  const isDark = useSelector((state: RootState) => state?.leads?.darkMode);
 
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button className="px-2 py-1.5 cursor-pointer text-sm text-gray-700 font-medium rounded-md flex items-center gap-1 hover:bg-gray-200">
+        <button className="px-2 py-1.5 cursor-pointer text-sm font-medium rounded-md flex items-center gap-1 hover:bg-gray-300">
           {order === "asc" ? (
             <ArrowDownAZ size={16} />
           ) : (
@@ -31,11 +34,13 @@ export default function SortDropdown({
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Content
-        className="bg-white border border-gray-300 rounded-md shadow-lg text-sm p-3 w-60"
+        className={`${
+          isDark ? "bg-primary-dark text-white" : "bg-primary text-gray-800"
+        } border border-gray-300 rounded-md shadow-lg text-sm p-3 w-60`}
         sideOffset={5}
       >
         <div className="flex items-center justify-between mb-2">
-          <span className="text-gray-700 font-medium">Sort by</span>
+          <span className="font-medium">Sort by</span>
           <Info size={14} className="text-gray-400" />
         </div>
         <select

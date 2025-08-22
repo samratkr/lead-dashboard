@@ -218,10 +218,19 @@ export default function Filters() {
   const toggleSection = (name: string) => {
     setOpenSections((prev) => ({ ...prev, [name]: !prev[name] }));
   };
+  const isDark = useSelector((state: RootState) => state?.leads?.darkMode);
 
   return (
-    <div className="bg-white border-t border-gray-100 flex flex-col h-full">
-      <div className="bg-white border border-gray-100 p-0.5 m-2 rounded flex gap-0.5">
+    <div
+      className={`${
+        isDark ? "bg-primary-dark text-white" : "bg-primary text-gray-800"
+      } border-t border-gray-100 flex flex-col h-full`}
+    >
+      <div
+        className={`${
+          isDark ? "bg-primary-dark text-white" : "bg-primary text-gray-800"
+        } border border-gray-100 p-0.5 m-2 rounded flex gap-0.5`}
+      >
         {statsButtons.map((btn) => (
           <button
             key={btn.id}
@@ -229,28 +238,26 @@ export default function Filters() {
               setActiveId(btn.id);
               btn.onClick();
             }}
-            className={`flex flex-col items-center cursor-pointer justify-center p-1 rounded w-25 text-sm text-gray-700 
+            className={`flex flex-col items-center cursor-pointer justify-center p-1 rounded w-25 text-sm 
             ${
               activeId === btn.id
                 ? "bg-[#ECF3FE] text-white"
-                : "bg-white hover:bg-gray-200"
+                : "hover:bg-gray-300"
             }`}
           >
             <span
               className={`${
                 activeId === btn.id
                   ? "text-[#367CC2] font-medium"
-                  : "text-gray-700 font-medium"
+                  : " font-medium"
               }`}
             >
               {btn.label1}
             </span>
 
             <span
-              className={`mt-1 px-1 text-xs rounded-full ${
-                activeId === btn.id
-                  ? "bg-white text-gray-700"
-                  : "bg-gray-100 text-gray-700"
+              className={`mt-1 px-1 text-xs rounded-full text-gray-800 ${
+                activeId === btn.id ? "bg-gray-300" : "bg-gray-300"
               }`}
             >
               {btn.value}
@@ -262,13 +269,20 @@ export default function Filters() {
         {filterCategories.map((category) => {
           const Icon = category.icon;
           return (
-            <div key={category.name} className="border-t border-gray-300">
+            <div
+              key={category.name}
+              className={`border-t border-gray-300 ${
+                isDark
+                  ? "bg-primary-dark text-white"
+                  : "bg-primary text-gray-800"
+              }`}
+            >
               <button
                 onClick={() => toggleSection(category.name)}
-                className="flex justify-between cursor-pointer items-center w-full text-sm text-left text-gray-800 font-medium h-12 px-3"
+                className="flex justify-between cursor-pointer items-center w-full text-sm text-left font-medium h-12 px-3"
               >
                 <span className="flex items-center gap-2">
-                  <Icon className="h-4 w-4 text-gray-800" />
+                  <Icon className="h-4 w-4" />
                   {category.name}
                 </span>
                 {openSections[category.name] ? (
@@ -285,8 +299,8 @@ export default function Filters() {
                       onClick={() => setActiveTab("people")}
                       className={`flex-1 px-3 py-2 text-sm font-medium flex gap-1 items-center ${
                         activeTab === "people"
-                          ? "text-blue-600 border-b-2 border-blue-600 bg-white"
-                          : "text-gray-500 border-b-2 border-white hover:text-gray-700 hover:bg-gray-50"
+                          ? "text-blue-600 border-b-2 border-blue-600"
+                          : "border-b-2 border-whit hover:bg-gray-50"
                       }`}
                     >
                       <MDIIcon path={mdiAccountOutline} size={0.8} />
@@ -297,8 +311,8 @@ export default function Filters() {
                       onClick={() => setActiveTab("companies")}
                       className={`flex-1 px-3 py-2 text-sm font-medium flex items-center gap-1 ${
                         activeTab === "companies"
-                          ? "text-blue-600 border-b-2 border-blue-600 bg-white"
-                          : "text-gray-500 border-b-2 border-white hover:text-gray-700 hover:bg-gray-50"
+                          ? "text-blue-600 border-b-2 border-blue-600"
+                          : " border-b-2 border-white hover:bg-gray-50"
                       }`}
                     >
                       <MDIIcon path={mdiOfficeBuildingOutline} size={0.6} />
@@ -319,17 +333,17 @@ export default function Filters() {
                     </div>
                     <DropdownMenu.Root>
                       <DropdownMenu.Trigger asChild>
-                        <button className="px-2 py-1 justify-between cursor-pointer w-full text-sm border border-gray-300 hover:bg-gray-200 text-gray-700 font-normal rounded-md flex items-center gap-1">
+                        <button className="px-2 py-1 justify-between cursor-pointer w-full text-sm border border-gray-300 hover:bg-gray-300 font-normal rounded-md flex items-center gap-1">
                           Select Lists
                           <MDIIcon path={mdiMenuDown} size={1} />
                         </button>
                       </DropdownMenu.Trigger>
                       <DropdownMenu.Content
                         align="start"
-                        className="bg-white w-full font-normal border border-gray-300 rounded-md shadow-lg text-sm"
+                        className="w-full font-normal border border-gray-300 rounded-md shadow-lg text-sm"
                       >
                         {category.options.map((opt) => (
-                          <DropdownMenu.Item className="px-3 w-full py-1.5 hover:bg-gray-200 cursor-pointer">
+                          <DropdownMenu.Item className="px-3 w-full py-1.5 hover:bg-gray-300 cursor-pointer">
                             {opt}
                           </DropdownMenu.Item>
                         ))}
@@ -348,53 +362,45 @@ export default function Filters() {
                     {showAdvanced && (
                       <div className="mt-2 space-y-2">
                         <div>
-                          <label className="text-xs text-gray-600">
-                            Include All
-                          </label>
-                          {/* <select className="w-full border rounded p-1 text-sm border-gray-300">
-                            <option>Option A</option>
-                            <option>Option B</option>
-                          </select> */}
+                          <label className="text-xs">Include All</label>
 
                           <DropdownMenu.Root>
                             <DropdownMenu.Trigger asChild>
-                              <button className="px-2 py-1 justify-between cursor-pointer w-full text-sm border border-gray-300 hover:bg-gray-200 text-gray-700 font-normal rounded-md flex items-center gap-1">
+                              <button className="px-2 py-1 justify-between cursor-pointer w-full text-sm border border-gray-300 hover:bg-gray-300 font-normal rounded-md flex items-center gap-1">
                                 Option A
                                 <MDIIcon path={mdiMenuDown} size={1} />
                               </button>
                             </DropdownMenu.Trigger>
                             <DropdownMenu.Content
                               align="start"
-                              className="bg-white w-full font-normal border border-gray-300 rounded-md shadow-lg text-sm"
+                              className="w-full font-normal border border-gray-300 rounded-md shadow-lg text-sm"
                             >
-                              <DropdownMenu.Item className="px-3 w-full py-1.5 hover:bg-gray-200 cursor-pointer">
+                              <DropdownMenu.Item className="px-3 w-full py-1.5 hover:bg-gray-300 cursor-pointer">
                                 Option A
                               </DropdownMenu.Item>
-                              <DropdownMenu.Item className="px-3 w-full py-1.5 hover:bg-gray-200 cursor-pointer">
+                              <DropdownMenu.Item className="px-3 w-full py-1.5 hover:bg-gray-300 cursor-pointer">
                                 Option B
                               </DropdownMenu.Item>
                             </DropdownMenu.Content>
                           </DropdownMenu.Root>
                         </div>
                         <div>
-                          <label className="text-xs text-gray-600">
-                            Exclude
-                          </label>
+                          <label className="text-xs">Exclude</label>
                           <DropdownMenu.Root>
                             <DropdownMenu.Trigger asChild>
-                              <button className="px-2 py-1 justify-between cursor-pointer w-full text-sm border border-gray-300 hover:bg-gray-200 text-gray-700 font-normal rounded-md flex items-center gap-1">
+                              <button className="px-2 py-1 justify-between cursor-pointer w-full text-sm border border-gray-300 hover:bg-gray-300 font-normal rounded-md flex items-center gap-1">
                                 Option X
                                 <MDIIcon path={mdiMenuDown} size={1} />
                               </button>
                             </DropdownMenu.Trigger>
                             <DropdownMenu.Content
                               align="start"
-                              className="bg-white w-full font-normal border border-gray-300 rounded-md shadow-lg text-sm"
+                              className="w-full font-normal border border-gray-300 rounded-md shadow-lg text-sm"
                             >
-                              <DropdownMenu.Item className="px-3 w-full py-1.5 hover:bg-gray-200 cursor-pointer">
+                              <DropdownMenu.Item className="px-3 w-full py-1.5 hover:bg-gray-300 cursor-pointer">
                                 Option X
                               </DropdownMenu.Item>
-                              <DropdownMenu.Item className="px-3 w-full py-1.5 hover:bg-gray-200 cursor-pointer">
+                              <DropdownMenu.Item className="px-3 w-full py-1.5 hover:bg-gray-300 cursor-pointer">
                                 Option Y
                               </DropdownMenu.Item>
                             </DropdownMenu.Content>
@@ -413,7 +419,7 @@ export default function Filters() {
                       {category.options.map((option) => (
                         <label
                           key={option}
-                          className="flex items-center space-x-2 text-xs text-gray-600"
+                          className="flex items-center space-x-2 text-xs"
                         >
                           <Checkbox.Root className="flex h-2 w-4 items-center justify-center rounded border border-gray-400 data-[state=checked]:bg-blue-600">
                             <Checkbox.Indicator>
@@ -430,11 +436,15 @@ export default function Filters() {
           );
         })}
       </div>
-      <div className="flex items-center justify-center shrink-0 border-t border-gray-100 px-4 gap-4 text-sm my-2">
-        <span className="w-20 rounded py-2 text-gray-700 px-3 shadow hover:bg-red-400 cursor-pointer">
+      <div
+        className={`${
+          isDark ? "bg-primary-dark text-white" : "bg-primary text-gray-800"
+        } flex items-center justify-center shrink-0 border-t border-gray-100 px-4 gap-4 text-sm my-2`}
+      >
+        <span className="w-20 rounded py-2 px-3 shadow hover:bg-red-400 cursor-pointer">
           Clear All
         </span>
-        <span className="rounded py-2 text-gray-700 px-3 shadow hover:bg-gray-70 cursor-pointer">
+        <span className="rounded py-2 px-3 shadow hover:bg-gray-70 cursor-pointer">
           More Filters
         </span>
       </div>

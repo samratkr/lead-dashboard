@@ -20,6 +20,8 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 const menuGroups = [
   {
@@ -63,12 +65,15 @@ const menuGroups = [
 export default function AppSidebar() {
   const [sticky, setSticky] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const isDark = useSelector((state: RootState) => state?.leads?.darkMode);
 
   const expanded = sticky || hovered;
 
   return (
     <div
-      className={`fixed z-99 left-0 top-0 h-screen bg-white text-black border-r border-neutral-200 flex flex-col transition-all duration-300 ease-in-out
+      className={`fixed z-99 left-0 top-0 h-screen ${
+        isDark ? "bg-primary-dark text-white" : "bg-primary text-gray-800"
+      } border-r border-neutral-200 flex flex-col transition-all duration-300 ease-in-out
         ${expanded ? "w-64" : "w-12"}`}
       onMouseEnter={() => !sticky && setHovered(true)}
       onMouseLeave={() => !sticky && setHovered(false)}

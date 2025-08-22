@@ -1,16 +1,23 @@
 import { X } from "lucide-react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 export default function SearchSettings({ setOpenDrawer }: any) {
+  const isDark = useSelector((state: RootState) => state?.leads?.darkMode);
   return (
     <div className="fixed inset-0 z-[9999]">
       <div className="absolute inset-0" onClick={() => setOpenDrawer(false)} />
 
-      <div className="absolute top-0 right-0 h-full w-100 bg-white shadow-lg flex flex-col">
+      <div
+        className={`${
+          isDark ? "bg-primary-dark text-white" : "bg-primary text-gray-800"
+        } absolute top-0 right-0 h-full w-100 shadow-lg flex flex-col`}
+      >
         <div className="flex items-center justify-between p-4">
           <h2 className="text-lg font-semibold">Search Settings</h2>
           <button
             onClick={() => setOpenDrawer(false)}
-            className="text-gray-600 hover:text-black"
+            className="hover:text-black"
           >
             <X size={20} />
           </button>
@@ -59,7 +66,7 @@ export default function SearchSettings({ setOpenDrawer }: any) {
         <div className="p-4 border-t flex justify-end gap-2">
           <button
             onClick={() => setOpenDrawer(false)}
-            className="px-3 py-1.5 rounded bg-gray-100 hover:bg-gray-200 text-sm"
+            className="px-3 py-1.5 rounded bg-gray-100 hover:bg-gray-300 text-sm"
           >
             Cancel
           </button>

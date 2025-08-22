@@ -3,6 +3,12 @@
 html, body, #root {
   height: 100%;
 }
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-primary:#ffffff;
+  --color-primary-dark:#3e3e3e;
+}
 
 @font-face {
   font-family: 'Diatype';

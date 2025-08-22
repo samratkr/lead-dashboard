@@ -25,6 +25,7 @@ export interface LeadState {
   searchParams: SearchParams;
   showSaved: Boolean;
   hideFilter: Boolean;
+  darkMode:Boolean
 }
 
 const initialState: LeadState = {
@@ -33,6 +34,7 @@ const initialState: LeadState = {
   searchParams: {},
   showSaved: false,
   hideFilter: false,
+  darkMode:true
 };
 
 const leadSlice = createSlice({
@@ -82,6 +84,9 @@ const leadSlice = createSlice({
     setHideFilterAction: (state, action: PayloadAction<Boolean>) => {
       state.hideFilter = action.payload;
     },
+    setDarkMode:(state, action:PayloadAction<Boolean>)=>{
+      state.darkMode = action.payload;
+    }
   },
 });
 
@@ -93,6 +98,7 @@ export const {
   clearSearchParams,
   saveLeads,
   setShowSaved,
+  setDarkMode,
   setHideFilterAction,
 } = leadSlice.actions;
 
