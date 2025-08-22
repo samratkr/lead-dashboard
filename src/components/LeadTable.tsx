@@ -200,7 +200,10 @@ export default function LeadTable({
                           }}
                           onChange={toggleSelectAll}
                         />
-                        <span className="absolute left-0 top-0 w-4 h-4 flex items-center justify-center text-xs font-bold transition-transform peer-checked:scale-100">
+                        <span
+                          className="absolute left-0 top-0 w-4 h-4 flex items-center justify-center text-xs font-bold transition-transform 
+             peer-checked:scale-100 scale-0"
+                        >
                           {selectedIds.length > 0 &&
                           selectedIds.length < currentLeads.length
                             ? "−"
